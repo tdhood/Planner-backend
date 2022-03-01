@@ -7,12 +7,13 @@
     color: whitesmoke;
 }
 #title {
-    color: whitesmoke;
+    padding-left: 2rem;
 }
 #navPanel {
     float: left;
     width: 20%;
     padding: 2rem 2rem;
+    cursor: pointer;
 }
 .container {
     background-color: #121212;

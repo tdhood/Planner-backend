@@ -16,6 +16,7 @@ let monthsList = [
 let habitsList = [
     { name: 'Exercise' },
     { name: 'Read' },
+    { name: 'Test' },
 ];
 
 function showMonths() {

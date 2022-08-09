@@ -1,4 +1,4 @@
-let monthsList = [
+const MONTH_LIST = [
     { name: "January", },
     { name: 'February', },
     { name: 'March' },
@@ -24,8 +24,8 @@ function showMonths() {
     let monthArea = document.getElementById('monthsList');
     let html = "";
 
-    for (let i = 0; i < monthsList.length; i++) {
-        let month = monthsList[i];
+    for (let i = 0; i < MONTH_LIST.length; i++) {
+        let month = MONTH_LIST[i];
         let title = `<p>${month.name}</p>`
         html += `
             <div id="month-${i}">

@@ -135,11 +135,12 @@ class Habit(db.Model):
     )
 
     #TODO: figure out how to reference the tracking points for a habit
-    timestamp = db.Column(
+    date_time = db.Column(
         db.DateTime,
         nullable=False,
     )
 
+    habits_per_day = db.relationship('Event', backref='habits')
     
 class Event(db.Model):
     """an individual event to track."""
@@ -172,3 +173,5 @@ class Event(db.Model):
         db.DateTime,
         nullable=False,
     )
+
+    

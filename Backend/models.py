@@ -140,7 +140,21 @@ class Habit(db.Model):
         nullable=False,
     )
 
-    habits_per_day = db.relationship('Event', backref='habits')
+    is_tracking = db.Column(
+        db.Boolean,
+        nullable=False,
+    )
+
+    days = db.Column(
+        db.Text(),
+        nullable=False,
+    )
+
+    value = db.Column(
+        db.Integer,
+        nullable=True,
+    )
+
     
 class Event(db.Model):
     """an individual event to track."""

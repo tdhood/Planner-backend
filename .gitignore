@@ -1,2 +1,3 @@
-/call graph.txt
-/notes
+.env
+venv/
+

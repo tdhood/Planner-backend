@@ -2,11 +2,11 @@
 
 from datetime import datetime
 
-import bcrypt
+# import bcrypt
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
-
+bcrypt = Bcrypt()
 db = SQLAlchemy()
 
 DEFAULT_IMAGE_URL='https://cdn-icons-png.flaticon.com/512/1053/1053244.png?w=360'
@@ -68,8 +68,7 @@ class User(db.Model):
         Hashes password and adds user to system
         """
         #Hash a password for the first time, with a randomly-generated salt
-        encoded_pass = bytes(password, "utf-8")
-        hashed_pass = bcrypt.hashpw((encoded_pass), bcrypt.gensalt())
+        hashed_pass = bcrypt.generate_password_hash(password).decode('utf8')
 
         user = User(
             username=username,
@@ -93,10 +92,11 @@ class User(db.Model):
         False.
         """
 
-        user = cls.query.filter_by(username=username).one_or_none()
+        user = cls.query.filter_by(username=username).first()
+        print('user', user)
 
         if user:
-            is_auth = bcrypt.checkpw(password, user.password)
+            is_auth = bcrypt.check_password_hash(user.password, password)
             if is_auth:
                 return user
 

@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 
+import bcrypt
 from flask import (
     Flask, render_template, request, flash, redirect, session, g, abort,
 )
@@ -9,6 +10,7 @@ from sqlalchemy.exc import IntegrityError
 from models import (
     db, connect_db, User
 )
+from forms import CSRFProtection, LoginForm, UserAddForm
 
 load_dotenv()
 
@@ -45,7 +47,7 @@ def add_user_to_g():
 def add_form_to_g():
     """adds a CSRF form to Flask global."""
 
-    g.csrf_form = CSRFProtectForm()
+    g.csrf_form = CSRFProtection()
 
 def do_login(user):
     """Log in user."""
@@ -126,3 +128,15 @@ def logout():
 
     # IMPLEMENT THIS AND FIX BUG
     # DO NOT CHANGE METHOD ON ROUTE
+
+################################################################################
+# Homepage route
+@app.route("/", methods=["GET"])
+def show_homepage():
+    """Show homepage to logged in users"""
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/login")
+    
+    return render_template("home.html")

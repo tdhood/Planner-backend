@@ -42,7 +42,6 @@ class HabitAddFomr(FlaskForm):
 
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description')
-    date_time = 
 
 
 

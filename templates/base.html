@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, intial-scale=1">
+        <title>My Bullet Journal</title>
+        <link rel="stylesheet" href="PlannerHomePage.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    </head>
+</html>
+
+<body class="{% block body_class %}{% endblock %}">
+
+    <nav class="navbar navbar-expand">
+      <div class="container-fluid">
+  
+        <!-- <div class="navbar-header">
+          <a href="/" class="navbar-brand">
+            <img src="/static/images/warbler-logo.png" alt="logo">
+            <span>Warbler</span>
+          </a>
+        </div> -->
+  
+        <ul class="nav navbar-nav navbar-right">
+  
+  
+          {% if not g.user %}
+          <li><a href="/signup">Sign up</a></li>
+          
+        
+            <!-- <li>
+              <button formaction="/logout" formmethod="POST">Log out</button>
+            </li> -->
+          </form>
+          {% endif %}
+  
+        </ul>
+      </div>
+    </nav>
+  
+    <div class="container">
+  
+      {% for category, message in get_flashed_messages(with_categories=True) %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+  
+      {% block content %}
+      {% endblock %}
+  
+    </div>
+  </body>

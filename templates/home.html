@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1">
+    <title>My Bullet Journal</title>
+    <link rel="stylesheet" href="PlannerHomePage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id='title'>
+    <h1>My Bullet Journal</h1>
+</div>
+
+<div id="box">
+    <div id="navPanel">
+        <div class='header'><h2>Months</h2></div>
+        <div id="monthsList"></div>  
+        <div class='header'><h2>Habits</h2></div>
+        <div id="habitsList"></div>
+        <input id="newHabit">
+        <button type="button" onclick="addHabitToHabitList()">Add Habit</button>
+    </div>
+
+    <div id="calendar_container">
+        <div id="calendar">
+            <div class="month">
+                <i class="fas fa-angle-left prev"></i>
+                <div class="date">
+                    <h1></h1>
+                    <p></p>
+                </div>
+                <i class="fas fa-angle-right next"></i>  
+            </div>
+            <div class="weekdays">
+                <div>SUN</div>
+                <div>MON</div>
+                <div>TUES</div>
+                <div>WED</div>
+                <div>THUR</div>
+                <div>FRI</div>
+                <div>SAT</div>
+            </div>
+            <div class="days"></div>
+        </div>
+    </div>
+    <div id="events">Events</div>
+    <div id="journal">Journal</div>
+</div>
+<script src="Calendar.js"></script>
+<script src="PlannerHomePage.js"></script> 
+</body>
+</html>

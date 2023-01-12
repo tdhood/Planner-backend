@@ -68,7 +68,8 @@ class User(db.Model):
         Hashes password and adds user to system
         """
         #Hash a password for the first time, with a randomly-generated salt
-        hashed_pass = bcrypt.hashpw(base64.b64encode(password), bcrypt.gensalt())
+        encoded_pass = bytes(password, "utf-8")
+        hashed_pass = bcrypt.hashpw((encoded_pass), bcrypt.gensalt())
 
         user = User(
             username=username,
@@ -95,7 +96,7 @@ class User(db.Model):
         user = cls.query.filter_by(username=username).one_or_none()
 
         if user:
-            is_auth = bcrypt.checkpw(user.password, password)
+            is_auth = bcrypt.checkpw(password, user.password)
             if is_auth:
                 return user
 

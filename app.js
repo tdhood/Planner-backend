@@ -1,16 +1,24 @@
 /** Bullet express application. */
 
 const express = require("express");
-const { NotFoundError } = require("./expressError");
-const companyRoutes = require("./routes/companies");
-const invoiceRoutes = require("./routes/invoices");
-
 const app = express();
 
+const { NotFoundError } = require("./expressError");
+const calendarRoutes = require("./routes/calendar");
+const loggingRoutes = require("./routes/logging");
+
+
+// process JSON body => req.body
 app.use(express.json());
 
-// app.use("/companies", companyRoutes);
-// app.use("/invoices", invoiceRoutes);
+// process traditional form data => req.body
+app.use(express.urlencoded({ extended: true }));
+
+app.set('view engine', 'html');
+app.engine('html', require('ejs').renderFile);
+
+app.use("/mycalendar", calendarRoutes);
+app.use("/user", loggingRoutes);
 
 /** 404 handler: matches unmatched routes; raises NotFoundError. */
 app.use(function (req, res, next) {
@@ -24,7 +32,6 @@ app.use(function (err, req, res, next) {
   if (process.env.NODE_ENV !== "test") console.error(status, err.stack);
   return res.status(status).json({ error: { message, status } });
 });
-
 
 
 module.exports = app;

@@ -3,13 +3,16 @@
 const express = require("express");
 const app = express();
 
+const { authenticateJWT } = require("./middleware/auth");
 const { NotFoundError } = require("./expressError");
 const calendarRoutes = require("./routes/calendar");
-const loggingRoutes = require("./routes/logging");
+const userRoutes = require("./routes/users");
+const authRoutes = require("./routes/auth")
 
 
 // process JSON body => req.body
 app.use(express.json());
+// app.use(authenticateJWT);
 
 // process traditional form data => req.body
 app.use(express.urlencoded({ extended: true }));
@@ -17,8 +20,13 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
 
-app.use("/mycalendar", calendarRoutes);
-app.use("/user", loggingRoutes);
+app.use("/auth", authRoutes);
+app.use("/myCalendar", calendarRoutes);
+app.use("/users", userRoutes);
+
+app.get("/", function (req, res) {
+    return res.render("../views/home.html");
+  });
 
 /** 404 handler: matches unmatched routes; raises NotFoundError. */
 app.use(function (req, res, next) {

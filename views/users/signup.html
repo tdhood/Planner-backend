@@ -14,5 +14,23 @@
 </html>
 
 <body>
-  <h1>Sign up page</h1>
+  <h1>Sign up</h1>
+  <form action="/users/signup" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" id="signup-username" name="username" required>
+
+    <label for="username">Password(Must be 8 char long):</label>
+    <input type="text" id="signup-password" name="password" required>
+
+    <label for="firstName">First Name:</label>
+    <input type="text" id="signup-first-name" name="firstName" required>
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="signup-last-name" name="lastName" required>
+
+    <label for="email">Email:</label>
+    <input type="text" id="signup-email" name="email" required>
+
+    <button onclick="submit">submit</button>
+  </form>
 </body>

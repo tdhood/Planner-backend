@@ -52,7 +52,7 @@ class User {
    **/
 
     static async register(
-    { username, password, email, isAdmin }) {
+    { username, password, email, firstName, lastName}) {
         const duplicateCheck = await db.query(
             `SELECT username
                 FROM users
@@ -71,14 +71,16 @@ class User {
                 (username,
                 password,
                 email,
-                is_admin)
-                VALUES ($1, $2, $3, $4, $5, $6)
-                RETURNING username, email, is_admin AS "isAdmin"`,
+                firstName,
+                lastName)
+                VALUES ($1, $2, $3, $4, $5)
+                RETURNING username, email`,
             [
             username,
             hashedPassword,
+            firstName,
+            lastName,
             email,
-            isAdmin,
             ],
         );
 
@@ -114,3 +116,5 @@ class User {
     //     return user;
     // }
 }
+
+module.exports = User;

@@ -2,6 +2,18 @@
 
 const date = new Date();
 
+const exampleCalendarEvents = [
+    {
+        timestamp: "2023-01-22 20:00:00Z",
+        title: "Overwatch",
+        description: "Play of the game."
+    }
+]
+
+function fetchCalendarEvents(year, month) {
+
+}
+
 const renderCalendar = () => {
     date.setDate(1);
     

@@ -1,8 +1,9 @@
-const app = require("./app");
+
+const app = require("../backend/nodeSetup/app");
 
 app.listen(3000, function () {
   console.log("Started http://localhost:3000/");
   console.log("Bullet journal running.")
 });
 
-// module.exports = app; 
+module.exports = app; 

@@ -6,20 +6,15 @@ const express = require("express");
 const router = new express.Router();
 
 const User = require("../models/user");
-const { NotFoundError, BadRequestError } = require("../expressError");
+const { NotFoundError, BadRequestError } = require("../nodeSetup/expressError");
 const { createToken } = require("../helpers/tokens");
-const db = require("../db");
+const db = require("../nodeSetup/db");
 const userAuthSchema  = require("../schemas/userAuth.json");
 const userRegisterSchema  = require("../schemas/userRegister.json");
 
-router.get("/login", async function (req, res, next) {
-  return res.render("../views/users/login.html");
-});
 
 router.post("/login", async function (req, res, next) {
-  console.log('database', db.database)
   const username = req.body.username;
-  console.log("username", username);
 
   try {
     const validator = jsonschema.validate(
@@ -37,14 +32,14 @@ router.post("/login", async function (req, res, next) {
                 WHERE username = $1`,
         [username],
     )
-    console.log('user', user)
     const token = createToken(user)
-    return res.json({ token });
+    return res.json({ user, token });
 
   } catch (err) {
-    console.log('you made an error in login')
+    console.log('err=', err)
     return next(err);
-  }
+  
+}
   
   // const user = result.rows[0];
   // console.log('result', result)
@@ -57,10 +52,6 @@ router.post("/login", async function (req, res, next) {
   // }
 });
 
-
-router.get("/signup", async function (req, res, next) {
-    return res.render("../views/users/signup.html");
-  });
 
 /** POST /users/register:   { user } => { token }
  *

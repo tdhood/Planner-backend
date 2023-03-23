@@ -44,7 +44,6 @@ CREATE TABLE lists (
   id SERIAL PRIMARY KEY,
   title VARCHAR(50) NOT NULL,
   description TEXT,
-  content TEXT ARRAY,
   user_id INTEGER NOT NULL
     REFERENCES users ON DELETE CASCADE,
   timestamp TIMESTAMP
@@ -53,7 +52,7 @@ CREATE TABLE lists (
 CREATE TABLE list_items (
   id SERIAL PRIMARY KEY,
   content TEXT,
-  lists_id INTEGER NOT NULL
+  list_id INTEGER NOT NULL
     REFERENCES lists ON DELETE CASCADE,
   timestamp TIMESTAMP
 );

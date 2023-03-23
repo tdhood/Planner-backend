@@ -63,19 +63,21 @@ VALUES ('event1',
         '12:00:00', '13:00:00', 
         1);
 
-INSERT INTO lists (title, description, content, user_id)
+INSERT INTO lists (title, description, user_id)
 VALUES ('list1',
         'list1 description',
-        '{"item1", "item2", "item3"}',
         1),
         ('list2',
         'list2 description',
-        '{"item1", "item2", "item3"}',
         1),
         ('list3',
         'list3 description',
-        '{"item1", "item2", "item3"}',
         1);
+
+INSERT INTO list_items (content, list_id)
+VALUES ('item1', 1), ('item2', 1), ('item3', 1),
+        ('item1', 2), ('item2', 2), ('item3', 2),
+        ('item1', 3), ('item2', 3), ('item3', 3);
 
 INSERT INTO journals (title, content, user_id)
 VALUES ('journal1',

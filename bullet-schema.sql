@@ -1,31 +1,86 @@
+
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR(25),
   password TEXT NOT NULL,
-  firstName TEXT NOT NULL,
-  lastName TEXT NOT NULL,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
   email TEXT NOT NULL
 );
+
+CREATE TABLE tables (
+  id SERIAL PRIMARY KEY,
+  table_name VARCHAR(10) NOT NULL,
+  user_id INTEGER NOT NULL
+    REFERENCES users ON DELETE CASCADE,
+  timestamp TIMESTAMP
+);
+
 
 CREATE TABLE habits (
   id SERIAL PRIMARY KEY,
   title TEXT NOT NULL,
   description TEXT NOT NULL,
   days TEXT NOT NULL,
-  value INTEGER,
-  is_tracking BOOLEAN NOT NULL,
   user_id INTEGER NOT NULL
-    REFERENCES users ON DELETE CASCADE
+    REFERENCES users ON DELETE CASCADE,
+  timestamp TIMESTAMP
 );
 
 CREATE TABLE events (
   id SERIAL PRIMARY KEY,
   title VARCHAR(50) NOT NULL,
   description TEXT NOT NULL,
-  days TEXT NOT NULL,
-  value INTEGER,
-  is_tracking BOOLEAN NOT NULL,
+  date_start DATE NOT NULL,
+  date_end DATE NOT NULL,
+  time_start TIME NOT NULL,
+  time_end TIME NOT NULL,
+  user_id INTEGER NOT NULL
+    REFERENCES users ON DELETE CASCADE,
+  timestamp TIMESTAMP
+);
+
+CREATE TABLE lists (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(50) NOT NULL,
+  description TEXT,
+  content TEXT ARRAY,
+  user_id INTEGER NOT NULL
+    REFERENCES users ON DELETE CASCADE,
+  timestamp TIMESTAMP
+);
+
+CREATE TABLE list_items (
+  id SERIAL PRIMARY KEY,
+  content TEXT,
+  lists_id INTEGER NOT NULL
+    REFERENCES lists ON DELETE CASCADE,
+  timestamp TIMESTAMP
+);
+
+CREATE TABLE journals (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(50) NOT NULL,
+  content TEXT,
+  user_id INTEGER NOT NULL
+    REFERENCES users ON DELETE CASCADE,
+  timestamp TIMESTAMP
+);
+
+CREATE TABLE tasks (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(50) NOT NULL,
+  description TEXT,
+  priority INTEGER NOT NULL,
   user_id INTEGER NOT NULL
     REFERENCES users ON DELETE CASCADE,
   timestamp TIMESTAMP NOT NULL
+);
+
+CREATE TABLE bullets (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL
+    REFERENCES users ON DELETE CASCADE,
+  table_id INTEGER NOT NULL
+    REFERENCES tables ON DELETE CASCADE
 );

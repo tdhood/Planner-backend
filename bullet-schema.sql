@@ -16,7 +16,6 @@ CREATE TABLE tables (
   timestamp TIMESTAMP
 );
 
-
 CREATE TABLE habits (
   id SERIAL PRIMARY KEY,
   title TEXT NOT NULL,
@@ -57,6 +56,7 @@ CREATE TABLE list_items (
   timestamp TIMESTAMP
 );
 
+-- TODO: add updated at timestamp
 CREATE TABLE journals (
   id SERIAL PRIMARY KEY,
   title VARCHAR(50) NOT NULL,
@@ -66,6 +66,7 @@ CREATE TABLE journals (
   timestamp TIMESTAMP
 );
 
+-- TODO: add an is_completed column
 CREATE TABLE tasks (
   id SERIAL PRIMARY KEY,
   title VARCHAR(50) NOT NULL,

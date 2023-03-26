@@ -15,7 +15,7 @@ const User = require("../models/user");
 const Calendar = require("../models/calendar");
 
 /** GET / - list of all user bullets
- *  returns `{ user_data: [{ user, habits, lists, events, tasks, journals }, ...]}` */
+ *  returns { user_data: [{ user, habits, lists, events, tasks, journals }, ...]} */
 
 router.get(
   "/:username",

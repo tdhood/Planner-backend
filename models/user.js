@@ -88,24 +88,23 @@ class User {
    * Throws NotFoundError if user not found.
    **/
 
-  // static async get(username) {
-  //     const userRes = await db.query(
-  //         `SELECT username,
-  //                 first_name AS "firstName",
-  //                 last_name AS "lastName",
-  //                 email,
-  //                 is_admin AS "isAdmin"
-  //         FROM users
-  //         WHERE username = $1`,
-  //         [username],
-  //     );
+  static async get(username) {
+      const userRes = await db.query(
+          `SELECT username,
+                  id as "user_id",
+                  email
+          FROM users
+          WHERE username = $1`,
+          [username],
+      );
 
-  //     const user = userRes.rows[0];
+      const user = userRes.rows[0];
+      console.log('user=', user)
 
-  //     if (!user) throw new NotFoundError(`No user: ${username}`);
+      if (!user) throw new NotFoundError(`No user: ${username}`);
 
-  //     return user;
-  // }
+      return user;
+  }
 }
 
 module.exports = User;

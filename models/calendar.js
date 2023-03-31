@@ -75,12 +75,14 @@ class Calendar {
    */
   static async getTasks(id) {
     const tasks = await db.query(
-      `SELECT t.id, t.title, t.description, t.priority
-        FROM tasks t
+      `SELECT tl.id, tl.title, tl.description, ARRAY_AGG(ti.priority ||','|| ti.content || ',' || ti.is_completed ORDER BY ti.priority), tl.timestamp
+        FROM task_lists tl
           INNER JOIN users u
-            ON t.user_id = u.id
-              WHERE u.id = $1
-                ORDER BY priority DESC`,
+            ON tl.user_id = u.id
+              INNER JOIN task_items ti
+                ON tl.id = ti.list_id
+                  WHERE u.id = $1
+                    GROUP BY tl.id`,
       [id]
     );
     return tasks.rows;

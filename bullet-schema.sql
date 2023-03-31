@@ -66,15 +66,23 @@ CREATE TABLE journals (
   timestamp TIMESTAMP
 );
 
--- TODO: add an is_completed column
-CREATE TABLE tasks (
+CREATE TABLE task_lists (
   id SERIAL PRIMARY KEY,
   title VARCHAR(50) NOT NULL,
   description TEXT,
-  priority INTEGER NOT NULL,
   user_id INTEGER NOT NULL
     REFERENCES users ON DELETE CASCADE,
-  timestamp TIMESTAMP NOT NULL
+  timestamp TIMESTAMP
+);
+
+CREATE TABLE task_items (
+  id SERIAL PRIMARY KEY,
+  content TEXT,
+  priority INTEGER,
+  is_completed BOOLEAN,
+  list_id INTEGER NOT NULL
+    REFERENCES task_lists ON DELETE CASCADE,
+  timestamp TIMESTAMP
 );
 
 CREATE TABLE bullets (

@@ -90,5 +90,13 @@ VALUES ('journal1',
         'journal3 entry',
         1);
 
+INSERT INTO task_lists (title, description, user_id)
+VALUES ('tasklist1', 'taskDescription1', 1),
+        ('tasklist2', 'taskDescription2', 1);
+
+INSERT INTO task_items (content, priority, is_completed, list_id)
+VALUES ('item1', 1, FALSE, 1), ('item2', 2, FALSE, 1), ('item3', 3, FALSE, 1),
+        ('item1', 1, FALSE, 2), ('item2', 1, FALSE, 2), ('item3', 1, TRUE, 2);
+
 INSERT INTO bullets (user_id, table_id)
 VALUES (1,1), (1,2), (1,3), (1,4), (1,5), (1,6);

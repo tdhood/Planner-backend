@@ -75,7 +75,7 @@ class Calendar {
    */
   static async getTasks(id) {
     const tasks = await db.query(
-      `SELECT tl.id, tl.title, tl.description, ARRAY_AGG(ti.priority ||','|| ti.content || ',' || ti.is_completed ORDER BY ti.priority), tl.timestamp
+      `SELECT tl.id, tl.title, tl.description, ARRAY_AGG(ti.priority ||','|| ti.content || ',' || ti.is_completed ORDER BY ti.priority) as content, tl.timestamp
         FROM task_lists tl
           INNER JOIN users u
             ON tl.user_id = u.id
@@ -107,12 +107,8 @@ class Calendar {
       [id]
     );
 
-
-    return lists.rows
-
-    
+    return lists.rows;
   }
-
 }
 
 module.exports = Calendar;

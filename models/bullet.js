@@ -12,7 +12,7 @@ const { BCRYPT_WORK_FACTOR } = require("../nodeSetup/config.js");
 
 /** Related functions for calendar page. */
 
-class Calendar {
+class Bullet {
   /** Get habit info for a specific user id
    *
    * Returns habit data
@@ -71,9 +71,9 @@ class Calendar {
    *
    * Returns task data
    *
-   * Task data should be { id, title, description, priority }
+   * Task data should be { id, title, description, [content], timestamp }
    */
-  static async getTasks(id) {
+  static async getTaskList(id) {
     const tasks = await db.query(
       `SELECT tl.id, tl.title, tl.description, ARRAY_AGG(ti.priority ||','|| ti.content || ',' || ti.is_completed ORDER BY ti.priority) as content, tl.timestamp
         FROM task_lists tl
@@ -87,6 +87,60 @@ class Calendar {
     );
     return tasks.rows;
   }
+
+  /** Get single task list info for a specific user id
+   *
+   * Returns task data
+   *
+   * Task data should be { id, title, description, [content], timestamp }
+   */
+    static async getSingleTaskList(userId, listId) {
+      const tasks = await db.query(
+        `SELECT tl.id, tl.title, tl.description, ARRAY_AGG(ti.priority ||','|| ti.content || ',' || ti.is_completed ORDER BY ti.priority), tl.timestamp
+          FROM task_lists tl
+            INNER JOIN users u
+              ON tl.user_id = u.id
+                INNER JOIN task_items ti
+                  ON tl.id = ti.list_id
+                    WHERE u.id = $1 and tl.id = $2`,
+        [userId, listId]
+      );
+      return tasks.rows;
+    }
+  /** Create a task list, update db, return new task list
+   * 
+   * data should be { title, description, user_id }
+   * 
+   */
+    static async addTaskList({ title, description, user_id }) {
+      console.log('addTaskList')
+      const duplicateCheck = await db.query(
+        `SELECT title
+          FROM task_lists
+            WHERE title = $1 and user_id = $2`,
+            [title, user_id]
+      );
+
+      if (duplicateCheck.rows[0])
+      throw new BadRequestError(`Duplicate company: ${handle}`);
+
+      const result = await db.query(
+        `INSERT INTO task_lists (title, description, user_id)
+          VALUES
+            ($1, $2, $3)
+            RETURNING id, title, user_id`,
+            [title, description, user_id],
+      )
+
+      // const bullet_table = await db.query(`
+      //   INSERT INTO bullets (user_id, table_id)
+      //     VALUES ($1, $2)`,
+      //     [user_id, result])
+
+      const task_list = result.rows[0]
+
+      return task_list
+    }
 
   /** Get ;ist info for a specific user id
    *
@@ -111,4 +165,4 @@ class Calendar {
   }
 }
 
-module.exports = Calendar;
+module.exports = Bullet;

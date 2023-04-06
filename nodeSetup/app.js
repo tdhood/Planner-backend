@@ -7,7 +7,7 @@ const cors = require("cors");
 
 const { authenticateJWT } = require("../middleware/auth");
 const { NotFoundError } = require("./expressError");
-const calendarRoutes = require("../routes/calendar");
+const calendarRoutes = require("../routes/bullet");
 const userRoutes = require("../routes/user");
 const authRoutes = require("../routes/auth")
 
@@ -21,7 +21,7 @@ app.use(authenticateJWT);
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/auth", authRoutes);
-app.use("/myCalendar", calendarRoutes);
+app.use("/myBullets", calendarRoutes);
 app.use("/user", userRoutes);
 
 
